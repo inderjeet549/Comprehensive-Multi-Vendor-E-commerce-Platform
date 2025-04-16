@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #fff;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 10px 0;
+      color: #333;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Dashboard</h2>
+    <a class="nav-link active" data-section="orders">View Orders</a>
+    <a class="nav-link" data-section="profile">Profile Information</a>
+    <a class="nav-link" data-section="addresses">Saved Addresses</a>
+    <a class="nav-link" data-section="payments">Payment Methods</a>
+    <a class="nav-link" data-section="cart">Cart</a>
+    <a class="nav-link" data-section="support">Support Tickets</a>
+  </div>
+
+  <div class="main">
+    <div id="orders" class="section active">
+      <h3>View Orders</h3>
+      <p>List of your past and current orders will appear here.</p>
+    </div>
+
+    <div id="profile" class="section">
+      <h3>Profile Information</h3>
+      <p>Your profile details such as name, email, and contact info.</p>
+    </div>
+
+    <div id="addresses" class="section">
+      <h3>Saved Addresses</h3>
+      <p>Manage your delivery and billing addresses here.</p>
+    </div>
+
+    <div id="payments" class="section">
+      <h3>Payment Methods</h3>
+      <p>Saved cards and payment options will be listed here.</p>
+    </div>
+
+    <div id="cart" class="section">
+        <h3>Cart</h3>
+        <p>Items you've added to your cart will show up here.</p>
+    </div>
+
+    <div id="support" class="section">
+      <h3>Support Tickets</h3>
+      <p>View and manage your support queries or tickets.</p>
+    </div>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        // Remove active class from all nav links
+        navLinks.forEach(l => l.classList.remove('active'));
+        // Hide all sections
+        sections.forEach(section => section.classList.remove('active'));
+
+        // Add active class to clicked link
+        link.classList.add('active');
+        // Show the selected section
+        const sectionId = link.getAttribute('data-section');
+        document.getElementById(sectionId).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
