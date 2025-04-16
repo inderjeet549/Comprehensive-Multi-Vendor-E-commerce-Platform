@@ -15,6 +15,15 @@ body {
     color: #333;
 }
 
+.result-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.err{
+    color: red;
+}
+
 /* Login Container */
 .login-container {
     background-color: #fff;

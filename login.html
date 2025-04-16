@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css"/>
   </head>
   <body>
     <div class="login-container">
@@ -12,12 +12,12 @@
       <form id="login-form">
         <div class="input-group">
           <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Enter your email" />
+          <input type="email" id="email" placeholder="Enter your email" required/>
         </div>
 
         <div class="input-group">
           <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" />
+          <input type="password" id="password" placeholder="Enter your password" required/>
         </div>
 
         <button type="submit" id="login-btn" class="login-btn">Login</button>
@@ -52,28 +52,22 @@
 
       document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-
         const status = document.getElementById('status');
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-
         if (!email || !password) {
-          status.innerHTML = `<div class="result error">Please fill in all fields.</div>`;
+          status.innerHTML = `<div class="result-error">Please fill in all fields.</div>`;
           return;
         }
-
         try {
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
-
           // Fetch user type from Firestore
           const userDocRef = doc(db, "users", user.uid);
           const userDoc = await getDoc(userDocRef);
-
           if (userDoc.exists()) {
             const userType = userDoc.data().userType;
             status.innerHTML = `<div class="pass">Login successful as <strong>${userType}</strong></div>`;
-
             // Redirect based on userType
             if (userType === "seller") {
               window.location.href = "seller-dashboard.html";

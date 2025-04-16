@@ -80,12 +80,12 @@
       const userType = document.getElementById('user-type').value;
 
       if (!username || !email || !password || !confirmPassword || !userType) {
-        status.innerHTML = `<div class="result error">Please fill in all fields.</div>`;
+        status.innerHTML = `<div class="result-error">Please fill in all fields.</div>`;
         return;
       }
 
       if (password !== confirmPassword) {
-        status.innerHTML = `<div class="result error">Passwords do not match.</div>`;
+        status.innerHTML = `<div class="result-error">Passwords do not match.</div>`;
         return;
       }
 
@@ -99,10 +99,10 @@
           email,
           userType
         });
-
+        alert("Registered Successfully!")
         status.innerHTML = `<div class="result success">Registered Successfully!</div>`;
       } catch (error) {
-        status.innerHTML = `<div class="result error">Registration Failed: ${error.message}</div>`;
+        status.innerHTML = `<div class="result-error">Registration Failed: ${error.message}</div>`;
       }
     });
   </script>
