@@ -30,6 +30,15 @@
         <input type="password" id="confirm-password" placeholder="Confirm your password" required />
       </div>
 
+      <div class="input-group">
+        <label for="user-type">User Type</label>
+        <select id="user-type" required>
+          <option value="">Select user type</option>
+          <option value="user">User</option>
+          <option value="seller">Seller</option>
+        </select>
+      </div>
+
       <button type="submit" id="signup-btn" class="signup-btn">Sign Up</button>
 
       <div class="additional-links">
@@ -42,26 +51,24 @@
 
   <!-- Firebase SDKs -->
   <script type="module">
-    // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-    // Firebase config
     const firebaseConfig = {
-      apiKey: "AIzaSyD6OBkNfYPC76Wrohzo3fPOr7aDtTune6E",
-      authDomain: "virtual-classroom-48f07.firebaseapp.com",
-      projectId: "virtual-classroom-48f07",
-      storageBucket: "virtual-classroom-48f07.appspot.com",
-      messagingSenderId: "1037610021930",
-      appId: "1:1037610021930:web:e755e76c282b2081aeff53",
-      measurementId: "G-0VX94FTHBJ"
+      apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
+      authDomain: "e-commerce-602fb.firebaseapp.com",
+      projectId: "e-commerce-602fb",
+      storageBucket: "e-commerce-602fb.firebasestorage.app",
+      messagingSenderId: "565262782829",
+      appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
+      measurementId: "G-ZC6N6K969D"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    // Handle form submission
     document.getElementById('signup-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -70,9 +77,9 @@
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
+      const userType = document.getElementById('user-type').value;
 
-      // Basic validation
-      if (!username || !email || !password || !confirmPassword) {
+      if (!username || !email || !password || !confirmPassword || !userType) {
         status.innerHTML = `<div class="result error">Please fill in all fields.</div>`;
         return;
       }
@@ -83,7 +90,16 @@
       }
 
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Save extra info to Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          username,
+          email,
+          userType
+        });
+
         status.innerHTML = `<div class="result success">Registered Successfully!</div>`;
       } catch (error) {
         status.innerHTML = `<div class="result error">Registration Failed: ${error.message}</div>`;
