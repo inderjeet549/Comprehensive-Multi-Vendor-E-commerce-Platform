@@ -1,0 +1,20 @@
+your-project-name
+├── orders
+│   └── [order_id]
+│       ├── items (array)
+│       ├── shipping (object)
+│       ├── payment (object)
+│       ├── subtotal (number)
+│       ├── shippingCost (number)
+│       ├── tax (number)
+│       ├── total (number)
+│       ├── status (string)
+│       ├── date (string)
+│       └── userId (string)
+└── notifications
+    └── [user_id]
+        └── [notification_id]
+            ├── title (string)
+            ├── message (string)
+            ├── timestamp (string)
+            └── read (boolean)

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking | Multi-Vendor E-commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS for map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header class="sticky-header">
+        <div class="container">
+            <a href="../index.html" class="logo">ShopAdda</a>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../products.html">Products</a></li>
+                    <li><a href="../orders.html" class="active">My Orders</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <a href="../profile.html"><i class="fas fa-user"></i></a>
+                <div class="cart-icon-container">
+                    <i class="fas fa-shopping-cart" id="cart-icon"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="order-tracking">
+            <h1>Order Tracking</h1>
+            
+            <div class="order-selector">
+                <label for="order-select">Select Order:</label>
+                <select id="order-select">
+                    <option value="">-- Select an order --</option>
+                    <!-- Orders will be populated dynamically -->
+                </select>
+            </div>
+
+            <div class="tracking-container" id="tracking-container">
+                <div class="order-details-card">
+                    <div class="order-header">
+                        <h2 id="order-number">Order #ORD-12345678</h2>
+                        <span class="order-status" id="order-status">Processing</span>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <div class="summary-item">
+                            <span>Order Date:</span>
+                            <span id="order-date">May 15, 2023</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Estimated Delivery:</span>
+                            <span id="delivery-date">May 20, 2023</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Delivery Address:</span>
+                            <span id="delivery-address">123 Main St, City, State 12345</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Timeline -->
+                <div class="timeline-container">
+                    <h2>Order Progress</h2>
+                    <div class="timeline" id="order-timeline">
+                        <div class="timeline-item active">
+                            <div class="timeline-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Order Placed</h3>
+                                <p>May 15, 2023 - 10:30 AM</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Order Confirmed</h3>
+                                <p>May 15, 2023 - 11:45 AM</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Processing</h3>
+                                <p>Expected: May 16, 2023</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Shipped</h3>
+                                <p>Expected: May 18, 2023</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Delivered</h3>
+                                <p>Expected: May 20, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Map -->
+                <div class="map-container">
+                    <h2>Delivery Location</h2>
+                    <div class="delivery-info">
+                        <div class="delivery-driver">
+                            <div class="driver-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Driver">
+                            </div>
+                            <div class="driver-details">
+                                <h3 id="driver-name">John Smith</h3>
+                                <p id="driver-vehicle">Vehicle: Blue Honda Civic (ABC-1234)</p>
+                                <div class="driver-contact">
+                                    <a href="tel:+1234567890"><i class="fas fa-phone"></i> Call Driver</a>
+                                    <a href="sms:+1234567890"><i class="fas fa-comment"></i> Message</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-time">
+                            <div class="time-estimate">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <p>Estimated Delivery</p>
+                                    <h3 id="delivery-time">45 minutes</h3>
+                                </div>
+                            </div>
+                            <button class="btn" id="refresh-location">
+                                <i class="fas fa-sync-alt"></i> Refresh Location
+                            </button>
+                        </div>
+                    </div>
+                    <div id="delivery-map"></div>
+                </div>
+
+                <!-- Order Items -->
+                <div class="order-items">
+                    <h2>Order Items</h2>
+                    <div class="items-list" id="order-items">
+                        <!-- Order items will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-order-selected" id="no-order-selected">
+                <i class="fas fa-box-open"></i>
+                <h2>No Order Selected</h2>
+                <p>Please select an order from the dropdown to view tracking details</p>
+                <a href="../orders.html" class="btn">View All Orders</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Bell -->
+    <div class="notification-bell" id="notification-bell">
+        <i class="fas fa-bell"></i>
+        <span class="notification-count">2</span>
+        <div class="notifications-dropdown" id="notifications-dropdown">
+            <h3>Order Updates</h3>
+            <div class="notification-list" id="notification-list">
+                <!-- Notifications will be populated dynamically -->
+            </div>
+            <a href="#" class="view-all">View All Notifications</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Multi-Vendor E-commerce Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    
+    <!-- Leaflet JS for map -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
