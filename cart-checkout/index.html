@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Multi-Vendor E-commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sticky Header with Cart Icon -->
+    <header class="sticky-header">
+        <div class="container">
+            <a href="../index.html" class="logo">ShopAdda</a>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../products.html">Products</a></li>
+                    <li><a href="../vendors.html">Vendors</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon-container">
+                <i class="fas fa-shopping-cart" id="cart-icon"></i>
+                <span class="cart-count">0</span>
+                <!-- Cart Preview Dropdown -->
+                <div class="cart-preview" id="cart-preview">
+                    <h3>Your Cart</h3>
+                    <div class="cart-items-container" id="preview-items">
+                        <!-- Cart items will be dynamically inserted here -->
+                        <p class="empty-cart-message">Your cart is empty</p>
+                    </div>
+                    <div class="cart-preview-footer">
+                        <p>Total: <span id="preview-total">₹0.00</span></p>
+                        <button class="btn view-cart-btn">View Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Shopping Cart Section -->
+        <section class="shopping-cart">
+            <h1>Your Shopping Cart</h1>
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be dynamically inserted here -->
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Your cart is empty</p>
+                        <a href="../products.html" class="btn">Continue Shopping</a>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₹0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="shipping">₹5.99</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax</span>
+                            <span id="tax">₹0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="total">₹5.99</span>
+                        </div>
+                    </div>
+                    <button class="btn checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checkout Modal -->
+        <div class="modal-overlay" id="checkout-modal">
+            <div class="modal">
+                <button class="close-modal" id="close-modal">&times;</button>
+                <div class="checkout-steps">
+                    <div class="step active" data-step="1">
+                        <span>1</span>
+                        <p>Shipping</p>
+                    </div>
+                    <div class="step" data-step="2">
+                        <span>2</span>
+                        <p>Payment</p>
+                    </div>
+                    <div class="step" data-step="3">
+                        <span>3</span>
+                        <p>Confirmation</p>
+                    </div>
+                </div>
+
+                <!-- Step 1: Shipping Information -->
+                <div class="checkout-step" id="step-1">
+                    <h2>Shipping Information</h2>
+                    <form id="shipping-form">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="zip">ZIP Code</label>
+                                <input type="text" id="zip" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipping-method">Shipping Method</label>
+                            <select id="shipping-method" required>
+                                <option value="standard">Standard Shipping (5-7 days) - ₹5.99</option>
+                                <option value="express">Express Shipping (2-3 days) - ₹12.99</option>
+                                <option value="overnight">Overnight Shipping - ₹24.99</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-next" id="next-to-payment">Continue to Payment</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Payment Information -->
+                <div class="checkout-step" id="step-2" style="display: none;">
+                    <h2>Payment Information</h2>
+                    <form id="payment-form">
+                        <div class="form-group">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry-date">Expiry Date</label>
+                                <input type="text" id="expiry-date" placeholder="MM/YY" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-prev" id="back-to-shipping">Back to Shipping</button>
+                            <button type="button" class="btn btn-next" id="next-to-confirm">Continue to Confirmation</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Order Confirmation -->
+                <div class="checkout-step" id="step-3" style="display: none;">
+                    <h2>Order Confirmation</h2>
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div id="confirmation-items">
+                            <!-- Order items will be dynamically inserted here -->
+                        </div>
+                        <div class="order-totals">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span id="confirm-subtotal">₹0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping</span>
+                                <span id="confirm-shipping">₹5.99</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax</span>
+                                <span id="confirm-tax">₹0.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total</span>
+                                <span id="confirm-total">₹5.99</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shipping-info">
+                        <h3>Shipping Information</h3>
+                        <p id="confirm-shipping-address"></p>
+                        <p id="confirm-shipping-method"></p>
+                    </div>
+                    <div class="payment-info">
+                        <h3>Payment Information</h3>
+                        <p id="confirm-payment-method"></p>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-prev" id="back-to-payment">Back to Payment</button>
+                        <button type="button" class="btn btn-confirm" id="place-order">Place Order</button>
+                    </div>
+                </div>
+
+                <!-- Order Success -->
+                <div class="order-success" id="order-success" style="display: none;">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Order Placed Successfully!</h2>
+                    <p>Thank you for your purchase. Your order has been placed and you'll receive a confirmation email shortly.</p>
+                    <p>Your order number is: <strong id="order-number"></strong></p>
+                    <a href="../index.html" class="btn">Continue Shopping</a>
+                    <a href="#" class="btn" id="view-order">View Order Details</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Multi-Vendor E-commerce Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
