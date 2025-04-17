@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product</title>
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #f8f9fa;
+            --dark-color: #343a40;
+            --light-color: #ffffff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .container {
+            background-color: #2d2d2d;
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        body.dark-mode h1 {
+            color: #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        body.dark-mode label {
+            color: #e0e0e0;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: white;
+            color: #333;
+        }
+
+        body.dark-mode input[type="text"],
+        body.dark-mode input[type="email"],
+        body.dark-mode input[type="tel"],
+        body.dark-mode input[type="number"],
+        body.dark-mode select, 
+        body.dark-mode textarea,
+        body.dark-mode input[type="file"]::file-selector-button {
+            background-color: #3d3d3d;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2070dc;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .logo {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 150px;
+        }
+
+        .file-upload {
+            width: 100%;
+            position: relative;
+        }
+
+        .file-upload input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .alert {
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        body.dark-mode .alert-success {
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.2);
+            border: 1px solid #dc3545;
+            color: #dc3545;
+        }
+
+        body.dark-mode .alert-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: inherit;
+        }
+
+        .required::after {
+            content: " *";
+            color: #dc3545;
+        }
+
+        .thumbnail-preview {
+            max-width: 100px;
+            max-height: 100px;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .section-title {
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        body.dark-mode .section-title {
+            border-bottom-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>Add New Product</h1>
+            <button class="dark-mode-toggle" id="darkModeToggle">🌓</button>
+        </div>
+
+        <div id="alertSuccess" class="alert alert-success">
+            Product added successfully!
+        </div>
+        
+        <div id="alertError" class="alert alert-danger">
+            Error adding product. Please try again.
+        </div>
+
+        <form id="productForm">
+            <h3 class="section-title">Seller Information</h3>
+            <div class="form-group">
+                <label for="sellerName" class="required">Name of Seller:</label>
+                <input type="text" id="sellerName" name="sellerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="mobile" class="required">Mobile Number:</label>
+                <input type="tel" id="mobile" name="mobile" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="required">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <h3 class="section-title">Product Information</h3>
+            <div class="form-group">
+                <label for="itemType" class="required">Type of Item:</label>
+                <select id="itemType" name="itemType" required>
+                    <option value="">Select item type</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="itemName" class="required">Item Name:</label>
+                <input type="text" id="itemName" name="itemName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="price" class="required">Price (₹):</label>
+                <input type="number" id="price" name="price" min="0" step="0.01" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="quantity" class="required">Number of Items:</label>
+                <input type="number" id="quantity" name="quantity" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="itemImage" class="required">Item Picture:</label>
+                <div class="file-upload">
+                    <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
+                    <img id="imagePreview" class="thumbnail-preview" alt="Preview">
+                </div>
+                <div id="uploadProgress" class="progress-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="submit-btn" id="submitBtn">Submit Product</button>
+            </div>
+            
+            <div class="form-group">
+                <button type="button" class="btn-secondary" id="backToDashboard" onclick="location.href='seller-dashboard.html'">Back to Dashboard</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Logo in bottom left corner -->
+    <div class="logo">
+        <svg width="150" viewBox="0 0 369.67 68.8">
+            <path fill="#111111" d="M544,0C537,24 529,49 520,74C511,99 502,125 493,150l-270,0C214,125 206,99 197,74C188,49 179,24 172,0l-162,0C36,75 61,144 84,207C107,270 130,330 153,386C175,442 197,495 219,546C240,596 263,645 286,693l149,0C458,645 480,596 502,546C524,495 546,442 569,386C591,330 614,270 637,207C660,144 685,75 711,0M357,536C354,526 349,512 342,495C335,478 328,458 319,435C310,412 301,387 291,360C280,333 270,304 259,274l197,0C445,304 435,333 425,360C415,387 406,412 397,435C388,458 380,478 373,495C366,512 361,526 357,536z"/>
+        </svg>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+        import { getDatabase, ref, set, push, update, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+        import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
+            authDomain: "e-commerce-602fb.firebaseapp.com",
+            databaseURL: "https://e-commerce-602fb-default-rtdb.firebaseio.com",
+            projectId: "e-commerce-602fb",
+            storageBucket: "e-commerce-602fb.appspot.com",
+            messagingSenderId: "565262782829",
+            appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
+            measurementId: "G-ZC6N6K969D"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
+        let currentUser = null;
+
+        // Sign in anonymously
+        signInAnonymously(auth)
+            .then(() => {
+                console.log("Signed in anonymously");
+            })
+            .catch((error) => {
+                console.error("Anonymous sign-in error:", error);
+                showAlert("alertError", "Authentication failed. Please refresh the page.");
+            });
+
+        // Check user authentication state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                currentUser = user;
+                console.log("User ID:", user.uid);
+            } else {
+                // User is signed out
+                console.log("User is signed out");
+            }
+        });
+
+        // Image preview
+        const imageInput = document.getElementById('itemImage');
+        const imagePreview = document.getElementById('imagePreview');
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form submission
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                showAlert("alertError", "You need to be logged in to add products.");
+                return;
+            }
+            
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting...";
+            
+            // Get form values
+            const sellerName = document.getElementById('sellerName').value;
+            const mobile = document.getElementById('mobile').value;
+            const email = document.getElementById('email').value;
+            const itemType = document.getElementById('itemType').value;
+            const itemName = document.getElementById('itemName').value;
+            const price = parseFloat(document.getElementById('price').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const description = document.getElementById('description').value;
+            const itemImage = document.getElementById('itemImage').files[0];
+            
+            try {
+                // Upload image first
+                let imageUrl = null;
+                if (itemImage) {
+                    imageUrl = await uploadImage(itemImage);
+                }
+                
+                // Create product object
+                const productData = {
+                    sellerName,
+                    mobile,
+                    email,
+                    itemType,
+                    itemName,
+                    price,
+                    quantity,
+                    description,
+                    imageUrl,
+                    createdAt: new Date().toISOString(),
+                    sellerId: currentUser.uid,
+                    status: "active"
+                };
+                
+                // Save product to Firebase
+                await saveProduct(productData);
+                
+                // Update seller's total products count
+                await updateSellerStats(currentUser.uid);
+                
+                // Show success message
+                showAlert("alertSuccess", "Product added successfully!");
+                
+                // Reset form
+                this.reset();
+                imagePreview.style.display = 'none';
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Product";
+                
+                // Clear progress bar
+                document.getElementById('uploadProgress').style.display = 'none';
+                document.getElementById('progressBar').style.width = '0%';
+                
+            } catch (error) {
+                console.error("Error adding product:", error);
+                showAlert("alertError", "Error adding product: " + error.message);
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Product";
+            }
+        });
+        
+        // Upload image to Firebase Storage
+        async function uploadImage(file) {
+            return new Promise((resolve, reject) => {
+                const fileName = `products/${currentUser.uid}/${Date.now()}-${file.name}`;
+                const imgRef = storageRef(storage, fileName);
+                const uploadTask = uploadBytesResumable(imgRef, file);
+                
+                // Show progress bar
+                const progressContainer = document.getElementById('uploadProgress');
+                progressContainer.style.display = 'block';
+                
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        // Track upload progress
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        document.getElementById('progressBar').style.width = progress + '%';
+                    },
+                    (error) => {
+                        // Handle errors
+                        reject(error);
+                    },
+                    async () => {
+                        // Upload completed successfully
+                        try {
+                            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                            resolve(downloadURL);
+                        } catch (error) {
+                            reject(error);
+                        }
+                    }
+                );
+            });
+        }
+        
+        // Save product to Firebase Realtime Database
+        async function saveProduct(productData) {
+            try {
+                // Create new product with auto-generated key
+                const productsRef = ref(database, 'products');
+                const newProductRef = push(productsRef);
+                await set(newProductRef, productData);
+                
+                // Also add to seller's products list
+                const sellerProductRef = ref(database, `users/${currentUser.uid}/products/${newProductRef.key}`);
+                await set(sellerProductRef, true);
+                
+                console.log("Product saved successfully with ID:", newProductRef.key);
+                return newProductRef.key;
+            } catch (error) {
+                console.error("Error saving product:", error);
+                throw error;
+            }
+        }
+        
+        // Update seller's stats after adding a product
+        async function updateSellerStats(userId) {
+            try {
+                const userRef = ref(database, `users/${userId}`);
+                const userSnapshot = await get(userRef);
+                const userData = userSnapshot.val() || {};
+                
+                // If stats doesn't exist, create it
+                if (!userData.stats) {
+                    userData.stats = {
+                        totalOrders: 0,
+                        totalSell: 0,
+                        totalProducts: 0,
+                        ordersComparison: "0% vs last month",
+                        sellComparison: "0% vs last month",
+                        productsComparison: "+0 vs last month"
+                    };
+                }
+                
+                // Increment total products count
+                const totalProducts = (userData.stats.totalProducts || 0) + 1;
+                
+                // Update stats
+                await update(ref(database, `users/${userId}/stats`), {
+                    totalProducts: totalProducts,
+                    productsComparison: `+1 vs last month`
+                });
+                
+                console.log("Seller stats updated successfully");
+            } catch (error) {
+                console.error("Error updating seller stats:", error);
+                throw error;
+            }
+        }
+        
+        // Show alert message
+        function showAlert(alertId, message) {
+            const alert = document.getElementById(alertId);
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Back to dashboard button
+        document.getElementById('backToDashboard').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+        
+        // Dark mode toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            
+            // Check for saved user preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+            
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                
+                // Save user preference
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
