@@ -1,460 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Login | E-Commerce Site</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --error-color: #dc2626;
-            --success-color: #16a34a;
-            --text-color: #1e293b;
-            --light-gray: #f1f5f9;
-            --medium-gray: #e2e8f0;
-            --dark-gray: #64748b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--light-gray);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: var(--text-color);
-        }
-
-        .login-container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 420px;
-            padding: 2.5rem;
-            margin: 1rem;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-header p {
-            color: var(--dark-gray);
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--medium-gray);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .input-group .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 38px;
-            cursor: pointer;
-            color: var(--dark-gray);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .login-btn:hover {
-            background-color: #1d4ed8;
-        }
-
-        .login-btn:disabled {
-            background-color: var(--medium-gray);
-            cursor: not-allowed;
-        }
-
-        .additional-links {
-            margin-top: 1.5rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .additional-links a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .additional-links a:hover {
-            text-decoration: underline;
-        }
-
-        .additional-links p {
-            margin-top: 0.5rem;
-            color: var(--dark-gray);
-        }
-
-        #status {
-            margin-top: 1.5rem;
-            text-align: center;
-        }
-
-        .result-error {
-            color: var(--error-color);
-            background-color: #fee2e2;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-
-        .result-success {
-            color: var(--success-color);
-            background-color: #dcfce7;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-
-        .social-login {
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .social-btn {
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            border: 1px solid var(--medium-gray);
-            background-color: white;
-        }
-
-        .social-btn:hover {
-            background-color: var(--light-gray);
-        }
-
-        .social-btn.google {
-            color: #db4437;
-        }
-
-        .social-btn.facebook {
-            color: #1877f2;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 1.5rem 0;
-            color: var(--dark-gray);
-            font-size: 0.9rem;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid var(--medium-gray);
-        }
-
-        .divider::before {
-            margin-right: 1rem;
-        }
-
-        .divider::after {
-            margin-left: 1rem;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 1.5rem;
-            }
-        }
-    </style>
-</head>
-<body>
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
     <div class="login-container">
-        <div class="login-header">
-            <h2>Welcome Back</h2>
-            <p>Login to access your account</p>
+      <h2>Login</h2>
+      <form id="login-form">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required/>
         </div>
 
-        <form id="login-form">
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required/>
-            </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required/>
+        </div>
 
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password" required/>
-                <i class="fas fa-eye password-toggle" id="toggle-password"></i>
-            </div>
+        <button type="submit" id="login-btn" class="login-btn">Login</button>
 
-            <button type="submit" id="login-btn" class="login-btn">
-                <span id="btn-text">Login</span>
-                <i class="fas fa-spinner fa-spin" id="btn-spinner" style="display: none;"></i>
-            </button>
-
-            <div class="divider">or</div>
-
-            <div class="social-login">
-                <button type="button" class="social-btn google">
-                    <i class="fab fa-google"></i>
-                    Continue with Google
-                </button>
-                <button type="button" class="social-btn facebook">
-                    <i class="fab fa-facebook-f"></i>
-                    Continue with Facebook
-                </button>
-            </div>
-
-            <div class="additional-links">
-                <a href="forgot-password.html">Forgot Password?</a>
-                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
-            </div>
-        </form>
-        <div id="status"></div>
+        <div class="additional-links">
+          <a href="#">Forgot Password?</a>
+          <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+      </form>
+      <div id="status"></div>
     </div>
 
     <!-- Firebase SDKs -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-      import { 
-          getAuth, 
-          signInWithEmailAndPassword,
-          GoogleAuthProvider,
-          FacebookAuthProvider,
-          signInWithPopup
-      } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-      import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-      import { app, db, auth } from './firebase-config.js';
+      import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+      import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-        //const firebaseConfig = {
-        //    apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
-        //    authDomain: "e-commerce-602fb.firebaseapp.com",
-        //    projectId: "e-commerce-602fb",
-        //    storageBucket: "e-commerce-602fb.firebasestorage.app",
-        //    messagingSenderId: "565262782829",
-        //    appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
-        //    measurementId: "G-ZC6N6K969D"
-        //};
+      const firebaseConfig = {
+        apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
+        authDomain: "e-commerce-602fb.firebaseapp.com",
+        projectId: "e-commerce-602fb",
+        storageBucket: "e-commerce-602fb.firebasestorage.app",
+        messagingSenderId: "565262782829",
+        appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
+        measurementId: "G-ZC6N6K969D"
+      };
 
-        //const app = initializeApp(firebaseConfig);
-        //const auth = getAuth(app);
-        //const db = getFirestore(app);
-        const googleProvider = new GoogleAuthProvider();
-        const facebookProvider = new FacebookAuthProvider();
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
-        // Toggle password visibility
-        document.getElementById('toggle-password').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this;
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-
-        // Handle form submission
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const status = document.getElementById('status');
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const loginBtn = document.getElementById('login-btn');
-            const btnText = document.getElementById('btn-text');
-            const btnSpinner = document.getElementById('btn-spinner');
-
-            // Clear previous status
-            status.innerHTML = '';
-            
-            // Validate inputs
-            if (!email || !password) {
-                status.innerHTML = `<div class="result-error">Please fill in all fields.</div>`;
-                return;
-            }
-
-            try {
-                // Show loading state
-                loginBtn.disabled = true;
-                btnText.textContent = 'Logging in...';
-                btnSpinner.style.display = 'inline-block';
-
-                // Sign in with email and password
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                
-                // Fetch user type from Firestore
-                const userDocRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-                
-                if (userDoc.exists()) {
-                    const userType = userDoc.data().userType;
-                    status.innerHTML = `<div class="result-success">Login successful! Redirecting...</div>`;
-                    
-                    // Redirect based on userType
-                    setTimeout(() => {
-                        if (userType === "seller") {
-                            window.location.href = "seller-dashboard.html";
-                        } else if (userType === "user") {
-                            window.location.href = "user-dashboard.html";
-                        } else {
-                            window.location.href = "index.html";
-                        }
-                    }, 1500);
-                } else {
-                    status.innerHTML = `<div class="result-error">User data not found.</div>`;
-                    loginBtn.disabled = false;
-                    btnText.textContent = 'Login';
-                    btnSpinner.style.display = 'none';
-                }
-
-            } catch (error) {
-                let errorMessage = "Login failed. Please try again.";
-                
-                switch(error.code) {
-                    case 'auth/invalid-email':
-                        errorMessage = "Please enter a valid email address.";
-                        break;
-                    case 'auth/user-disabled':
-                        errorMessage = "This account has been disabled.";
-                        break;
-                    case 'auth/user-not-found':
-                        errorMessage = "No account found with this email.";
-                        break;
-                    case 'auth/wrong-password':
-                        errorMessage = "Incorrect password. Please try again.";
-                        break;
-                    case 'auth/too-many-requests':
-                        errorMessage = "Too many failed attempts. Please try again later.";
-                        break;
-                }
-                
-                status.innerHTML = `<div class="result-error">${errorMessage}</div>`;
-                loginBtn.disabled = false;
-                btnText.textContent = 'Login';
-                btnSpinner.style.display = 'none';
-            }
-        });
-
-        // Google Sign In
-        document.querySelector('.social-btn.google').addEventListener('click', async () => {
-            try {
-                const result = await signInWithPopup(auth, googleProvider);
-                const user = result.user;
-                handleSocialLoginRedirect(user);
-            } catch (error) {
-                document.getElementById('status').innerHTML = 
-                    `<div class="result-error">Google login failed: ${error.message}</div>`;
-            }
-        });
-
-        // Facebook Sign In
-        document.querySelector('.social-btn.facebook').addEventListener('click', async () => {
-            try {
-                const result = await signInWithPopup(auth, facebookProvider);
-                const user = result.user;
-                handleSocialLoginRedirect(user);
-            } catch (error) {
-                document.getElementById('status').innerHTML = 
-                    `<div class="result-error">Facebook login failed: ${error.message}</div>`;
-            }
-        });
-
-        // Handle social login redirect
-        async function handleSocialLoginRedirect(user) {
-            const status = document.getElementById('status');
-            try {
-                const userDocRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-                
-                if (userDoc.exists()) {
-                    const userType = userDoc.data().userType;
-                    status.innerHTML = `<div class="result-success">Login successful! Redirecting...</div>`;
-                    
-                    setTimeout(() => {
-                        if (userType === "seller") {
-                            window.location.href = "seller-dashboard.html";
-                        } else if (userType === "user") {
-                            window.location.href = "user-dashboard.html";
-                        } else {
-                            window.location.href = "index.html";
-                        }
-                    }, 1500);
-                } else {
-                    // Create user document if it doesn't exist
-                    await setDoc(userDocRef, {
-                        email: user.email,
-                        displayName: user.displayName || '',
-                        userType: "user", // Default to regular user
-                        createdAt: new Date()
-                    });
-                    
-                    status.innerHTML = `<div class="result-success">Account created! Redirecting...</div>`;
-                    setTimeout(() => {
-                        window.location.href = "user-dashboard.html";
-                    }, 1500);
-                }
-            } catch (error) {
-                status.innerHTML = `<div class="result-error">Error: ${error.message}</div>`;
-            }
+      document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const status = document.getElementById('status');
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        if (!email || !password) {
+          status.innerHTML = `<div class="result-error">Please fill in all fields.</div>`;
+          return;
         }
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          // Fetch user type from Firestore
+          const userDocRef = doc(db, "users", user.uid);
+          const userDoc = await getDoc(userDocRef);
+          if (userDoc.exists()) {
+            const userType = userDoc.data().userType;
+            status.innerHTML = `<div class="pass">Login successful as <strong>${userType}</strong></div>`;
+            // Redirect based on userType
+            if (userType === "seller") {
+              window.location.href = "seller-dashboard.html";
+            } else if (userType === "user") {
+              window.location.href = "user-dashboard.html";
+            } else {
+              window.location.href = "index.html";
+            }
+          } else {
+            status.innerHTML = `<div class="err">User data not found.</div>`;
+          }
+
+        } catch (error) {
+          status.innerHTML = `<div class="err">Login failed: ${error.message}</div>`;
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

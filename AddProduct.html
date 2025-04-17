@@ -300,6 +300,11 @@
             width: 150px;
         }
 
+        .lower-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .container {
@@ -323,13 +328,17 @@
     <div class="dashboard-header">
         <div class="container">
             <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center">
+                <div class="lower-nav">
+                    <div class="d-flex align-items-center">
                     <img src="logo.jpg" alt="logo" style="height: 50px; width: auto; border-radius: 5px; box-shadow: var(--shadow-sm);">
-                    <h2 class="mb-0 ms-4">Add New Product</h2>
+                </div>
+                <div class="">
+                    <h1 class="text-primary">Add New Product</h1>
                 </div>
                 <div class="d-flex">
                     <button class="dark-mode-toggle me-4" id="darkModeToggle">🌓</button>
-                    <button class="btn btn-secondary" onclick="window.location.href='index.html'">Back to Dashboard</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='/seller-dashboard.html'">Back to Dashboard</button>
+                </div>
                 </div>
             </div>
         </div>
