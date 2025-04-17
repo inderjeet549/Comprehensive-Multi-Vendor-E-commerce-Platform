@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="ecommerce-container">
+        <!-- Header -->
+        <header class="store-header">
+            <div class="logo-container">
+                <h1>E - C O M M E R C E</h1>
+                <p>Your Premium Shopping Destination</p>
+            </div>
+            
+            <div class="user-controls">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search products...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-actions">
+                    <a href="user-dashboard.html" id="user-account"><i class="fas fa-user"></i></a>
+                    <a href="#" id="wishlist"><i class="fas fa-heart"></i> <span class="wishlist-count">0</span></a>
+                    <a href="#" id="cart"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="store-nav">
+            <a href="#" class="active">Home</a>
+            <a href="#">Electronics</a>
+            <a href="#">Jewelery</a>
+            <a href="#">Men's Clothing</a>
+            <a href="#">Women's Clothing</a>
+            <a href="#">Deals</a>
+        </nav>
+
+        <!-- Hero Banner -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h2>Summer Sale</h2>
+                <p>Up to 50% off on selected items</p>
+                <button class="shop-now-btn">Shop Now</button>
+            </div>
+        </section>
+
+        <!-- Featured Categories -->
+        <section class="featured-categories">
+            <h3>Shop by Category</h3>
+            <div class="categories-grid" id="categories-grid">
+                <!-- Categories will be loaded from FakeStore API -->
+            </div>
+        </section>
+
+        <!-- Popular Products -->
+        <section class="popular-products">
+            <div class="section-header">
+                <h3>Popular Products</h3>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded from FakeStore API -->
+            </div>
+        </section>
+
+        <!-- Special Offer -->
+        <section class="special-offer">
+            <div class="offer-content">
+                <h3>Limited Time Offer</h3>
+                <p>Get 30% off on all electronics this week only</p>
+                <button class="offer-btn">Claim Offer</button>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <h3>What Our Customers Say</h3>
+            <div class="testimonials-grid" id="testimonials-grid">
+                <!-- Testimonials will be loaded from Firebase -->
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h3>Subscribe to Our Newsletter</h3>
+            <p>Get the latest updates on new products and upcoming sales</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button>Subscribe</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="store-footer">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>E-Commerce</h4>
+                    <p>Your one-stop shop for all your needs</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <a href="#">Home</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Products</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Customer Service</h4>
+                    <a href="#">FAQs</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Returns & Refunds</a>
+                    <a href="#">Track Order</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Store Street, City</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                    <p><i class="fas fa-envelope"></i> info@ecommerce.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 E-Commerce. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    
+    <script src="home.js"></script>
+</body>
+</html>

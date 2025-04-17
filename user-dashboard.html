@@ -1,137 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>User Dashboard</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      min-height: 100vh;
-      background-color: #f4f4f4;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #fff;
-      padding: 20px;
-      border-right: 1px solid #ddd;
-    }
-
-    .sidebar h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #333;
-    }
-
-    .nav-link {
-      display: block;
-      padding: 10px 0;
-      color: #333;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .nav-link:hover,
-    .nav-link.active {
-      color: #007bff;
-      font-weight: bold;
-    }
-
-    .main {
-      flex: 1;
-      padding: 30px;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    .section h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .section p {
-      font-size: 16px;
-      color: #555;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="user-dashboard.css">
 </head>
 <body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <!-- <h1>E - C O M M E R C E</h1> -->
+             <img src="logo.jpg" height="100px">
+            <h2>User Dashboard</h2>
+        </header>
 
-  <div class="sidebar">
-    <img src="logo.jpg" alt="Logo" style="width: 100%; height: auto; margin-bottom: 20px;" />
-    <h2>Home</h2>
-    <a class="nav-link active" data-section="orders">View Orders</a>
-    <a class="nav-link" data-section="profile">Profile Information</a>
-    <a class="nav-link" data-section="addresses">Saved Addresses</a>
-    <a class="nav-link" data-section="payments">Payment Methods</a>
-    <a class="nav-link" data-section="cart">Cart</a>
-    <a class="nav-link" data-section="support">Support Tickets</a>
-  </div>
+        <div class="top-bar">
+            <!-- <div class="logo">logo/psum</div> -->
+            <div class="breadcrumb">
+                <a href="home.html">Home</a>
+                <button class="btn btn-primary" id="logout-btn">Logout</button>
+            </div>
+        </div>
 
-  <div class="main">
-    <div id="orders" class="section active">
-      <h3>View Orders</h3>
-      <p>List of your past and current orders will appear here.</p>
+        <div class="dashboard-content">
+            <div class="stats-row">
+                <div class="stat-card">
+                    <h3>My Orders</h3>
+                    <div class="stat-value" id="total-orders">0</div>
+                    <div class="stat-change" id="order-change">0% vs last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Total Spending</h3>
+                    <div class="stat-value" id="total-spending">¥0</div>
+                    <div class="stat-change" id="spending-change">0% vs last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Saved Items</h3>
+                    <div class="stat-value" id="saved-items">0</div>
+                    <div class="stat-change" id="saved-change">+0 vs last month</div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="order-summary">
+                        <h3>Order Status</h3>
+                        <div class="status-row">
+                            <div class="status-card">
+                                <div class="status-percent" id="processing-percent">0%</div>
+                                <div class="status-count" id="processing-count">0/0 Orders</div>
+                                <div class="status-label">Processing</div>
+                            </div>
+                            <div class="status-card">
+                                <div class="status-percent" id="shipped-percent">0%</div>
+                                <div class="status-count" id="shipped-count">0/0 Orders</div>
+                                <div class="status-label">Shipped</div>
+                            </div>
+                            <div class="status-card">
+                                <div class="status-percent" id="delivered-percent">0%</div>
+                                <div class="status-count" id="delivered-count">0/0 Orders</div>
+                                <div class="status-label">Delivered</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-orders">
+                        <h3>Recent Orders</h3>
+                        <div class="orders-list" id="orders-list">
+                            <!-- Orders will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="payment-history">
+                        <h3>Payment History</h3>
+                        <div class="transactions-list" id="transactions-list">
+                            <!-- Transactions will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-btn" id="track-order">
+                            <i class="fas fa-truck"></i> Track Order
+                        </button>
+                        <button class="action-btn" id="view-wishlist">
+                            <i class="fas fa-heart"></i> View Wishlist
+                        </button>
+                        <button class="action-btn" id="contact-support">
+                            <i class="fas fa-headset"></i> Contact Support
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="dashboard-nav">
+            <a href="#" class="nav-item active" data-section="dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="#" class="nav-item" data-section="orders">
+                <i class="fas fa-shopping-bag"></i> Orders
+            </a>
+            <a href="#" class="nav-item" data-section="wishlist">
+                <i class="fas fa-heart"></i> Wishlist
+            </a>
+            <a href="#" class="nav-item" data-section="messages">
+                <i class="fas fa-envelope"></i> Messages
+            </a>
+        </nav>
     </div>
 
-    <div id="profile" class="section">
-      <h3>Profile Information</h3>
-      <p>Your profile details such as name, email, and contact info.</p>
-    </div>
-
-    <div id="addresses" class="section">
-      <h3>Saved Addresses</h3>
-      <p>Manage your delivery and billing addresses here.</p>
-    </div>
-
-    <div id="payments" class="section">
-      <h3>Payment Methods</h3>
-      <p>Saved cards and payment options will be listed here.</p>
-    </div>
-
-    <div id="cart" class="section">
-        <h3>Cart</h3>
-        <p>Items you've added to your cart will show up here.</p>
-    </div>
-
-    <div id="support" class="section">
-      <h3>Support Tickets</h3>
-      <p>View and manage your support queries or tickets.</p>
-    </div>
-  </div>
-
-  <script>
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.section');
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        // Remove active class from all nav links
-        navLinks.forEach(l => l.classList.remove('active'));
-        // Hide all sections
-        sections.forEach(section => section.classList.remove('active'));
-
-        // Add active class to clicked link
-        link.classList.add('active');
-        // Show the selected section
-        const sectionId = link.getAttribute('data-section');
-        document.getElementById(sectionId).classList.add('active');
-      });
-    });
-  </script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    
+    <script src="user-dashboard.js"></script>
 </body>
 </html>
