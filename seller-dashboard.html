@@ -312,6 +312,17 @@
             background-color: #2070dc;
             border-color: #2070dc;
         }
+        
+        .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
 
         /* Orders */
         .order-item {
@@ -417,7 +428,8 @@
                 </div>
                 <div class="d-flex align-items-center">
                     <div class="logo me-4">username</div>
-                    <button class="dark-mode-toggle" id="darkModeToggle">🌓</button>
+                    <button class="dark-mode-toggle me-4" id="darkModeToggle">🌓</button>
+                    <button class="btn btn-danger" id="logoutBtn" onclick="logout()">Logout</button>
                 </div>
             </div>
         </div>
@@ -541,7 +553,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
-        import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -581,6 +593,8 @@
             } else {
                 // User is signed out
                 console.log("User is signed out");
+                // Redirect to login page
+                window.location.href = 'login.html';
             }
         });
 
@@ -703,6 +717,17 @@
             }
         }
 
+        // Make logout function accessible globally
+        window.logout = function() {
+            signOut(auth).then(() => {
+                // Sign-out successful, redirect to login page
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                // An error happened
+                console.error("Logout error:", error);
+            });
+        };
+
         // Dark mode toggle
         document.addEventListener('DOMContentLoaded', function() {
             const darkModeToggle = document.getElementById('darkModeToggle');
@@ -732,12 +757,6 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                 });
-            });
-            
-            // Add Product button
-            document.getElementById('addProductBtn').addEventListener('click', function() {
-                alert('Add New Product functionality would go here');
-                // In a real app, you would show a modal or navigate to a product form
             });
         });
     </script>
