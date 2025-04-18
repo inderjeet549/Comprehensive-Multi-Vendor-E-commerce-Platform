@@ -30,7 +30,7 @@
             --spacing-md: 15px;
             --spacing-lg: 20px;
         }
-        
+
         /* General Styles - Matching Dashboard */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -40,7 +40,7 @@
             color: var(--dark-color);
             padding: 0;
         }
-        
+
         body.dark-mode {
             background-color: #121212;
             color: var(--light-color);
@@ -61,14 +61,14 @@
             background-color: #2d2d2d;
             box-shadow: var(--shadow-md);
         }
-        
+
         /* Header - Matching Dashboard */
         .dashboard-header {
             background-color: var(--light-color);
             box-shadow: var(--shadow-sm);
             padding: var(--spacing-md) 0;
         }
-        
+
         body.dark-mode .dashboard-header {
             background-color: #1e1e1e;
         }
@@ -79,17 +79,17 @@
             align-items: center;
             margin-bottom: var(--spacing-lg);
         }
-        
+
         h1, h2, h3 {
             margin-bottom: var(--spacing-md);
             font-weight: 500;
         }
-        
+
         h1 {
             font-size: 1.8rem;
             color: var(--dark-color);
         }
-        
+
         body.dark-mode h1 {
             color: var(--light-color);
         }
@@ -98,25 +98,25 @@
         .form-group {
             margin-bottom: var(--spacing-md);
         }
-        
+
         label {
             display: block;
             margin-bottom: var(--spacing-sm);
             font-weight: 500;
             color: var(--dark-color);
         }
-        
+
         body.dark-mode label {
             color: #e0e0e0;
         }
-        
+
         input[type="text"],
         input[type="email"],
         input[type="tel"],
         input[type="number"],
         input[type="password"],
         input[type="url"],
-        select, 
+        select,
         textarea {
             width: 100%;
             padding: var(--spacing-sm);
@@ -126,20 +126,20 @@
             color: var(--dark-color);
             font-size: 1rem;
         }
-        
+
         body.dark-mode input[type="text"],
         body.dark-mode input[type="email"],
         body.dark-mode input[type="tel"],
         body.dark-mode input[type="number"],
         body.dark-mode input[type="password"],
         body.dark-mode input[type="url"],
-        body.dark-mode select, 
+        body.dark-mode select,
         body.dark-mode textarea {
             background-color: #3d3d3d;
             color: var(--light-color);
             border-color: #555;
         }
-        
+
         /* Buttons - Matching Dashboard */
         .btn {
             display: inline-block;
@@ -154,9 +154,9 @@
             line-height: 1.5;
             border-radius: 0.25rem;
             cursor: pointer;
-            transition: color 0.15s ease-in-out, 
-                        background-color 0.15s ease-in-out, 
-                        border-color 0.15s ease-in-out, 
+            transition: color 0.15s ease-in-out,
+                        background-color 0.15s ease-in-out,
+                        border-color 0.15s ease-in-out,
                         box-shadow 0.15s ease-in-out;
         }
 
@@ -170,7 +170,7 @@
             background-color: #2070dc;
             border-color: #2070dc;
         }
-        
+
         .btn-secondary {
             color: #fff;
             background-color: var(--muted-color);
@@ -181,14 +181,33 @@
             background-color: #5a6268;
             border-color: #545b62;
         }
-        
+
         .submit-btn {
             width: 100%;
             padding: var(--spacing-sm);
             font-size: 1rem;
             margin-top: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
         }
-        
+
+        .loading-spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none; /* Hidden by default */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Alerts - Matching Dashboard Colors */
         .alert {
             padding: var(--spacing-sm);
@@ -250,7 +269,7 @@
             border-bottom: 1px solid var(--border-color);
             color: var(--dark-color);
         }
-        
+
         body.dark-mode .section-title {
             border-bottom-color: #555;
             color: var(--light-color);
@@ -285,12 +304,12 @@
                 margin: var(--spacing-sm);
                 padding: var(--spacing-md);
             }
-            
+
             .form-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
+
             .dark-mode-toggle {
                 margin-top: var(--spacing-sm);
             }
@@ -298,7 +317,6 @@
     </style>
 </head>
 <body>
-    <!-- Header Matching Dashboard -->
     <div class="dashboard-header">
         <div class="container">
             <div class="d-flex justify-content-between">
@@ -322,11 +340,11 @@
         <div id="alertSuccess" class="alert alert-success">
             Product added successfully!
         </div>
-        
+
         <div id="alertError" class="alert alert-danger">
             Error adding product. Please try again.
         </div>
-        
+
         <div id="loginPrompt" style="display: none;">
             <div class="alert alert-warning">
                 You need to be logged in to add products.
@@ -342,17 +360,17 @@
                 <label for="sellerName" class="required">Name of Seller:</label>
                 <input type="text" id="sellerName" name="sellerName" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="mobile" class="required">Mobile Number:</label>
                 <input type="tel" id="mobile" name="mobile" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="email" class="required">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
-            
+
             <h3 class="section-title">Product Information</h3>
             <div class="form-group">
                 <label for="itemType" class="required">Type of Item:</label>
@@ -365,17 +383,17 @@
                     <option value="other">Other</option>
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label for="itemName" class="required">Item Name:</label>
                 <input type="text" id="itemName" name="itemName" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="price" class="required">Price (₹):</label>
                 <input type="number" id="price" name="price" min="0" step="0.01" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="quantity" class="required">Number of Items:</label>
                 <input type="number" id="quantity" name="quantity" min="1" required>
@@ -385,7 +403,7 @@
                 <label for="description">Description:</label>
                 <textarea id="description" name="description" rows="4"></textarea>
             </div>
-            
+
             <div class="form-group">
                 <label for="itemImage" class="required">Item Image URL:</label>
                 <input type="url" id="itemImage" name="itemImage" placeholder="https://example.com/image.jpg" required>
@@ -394,21 +412,30 @@
                     <img id="imagePreview" class="thumbnail-preview" alt="Image Preview">
                 </div>
             </div>
-            
+
             <div class="form-group">
-                <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">Submit Product</button>
+                <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
+                    Submit Product
+                    <div class="loading-spinner" id="loadingSpinner"></div>
+                </button>
             </div>
         </form>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getDatabase, ref, set, push, get, update } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
         import { 
-          getAuth, 
-          onAuthStateChanged
+            getFirestore, 
+            doc, 
+            setDoc, 
+            collection, 
+            getDoc,
+            updateDoc
+        } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged
         } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
         // Declare currentUser globally
@@ -416,56 +443,48 @@
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
-          authDomain: "e-commerce-602fb.firebaseapp.com",
-          databaseURL: "https://e-commerce-602fb-default-rtdb.firebaseio.com",
-          projectId: "e-commerce-602fb",
-          storageBucket: "e-commerce-602fb.appspot.com",
-          messagingSenderId: "565262782829",
-          appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
-          measurementId: "G-ZC6N6K969D"
+            apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
+            authDomain: "e-commerce-602fb.firebaseapp.com",
+            projectId: "e-commerce-602fb",
+            storageBucket: "e-commerce-602fb.appspot.com",
+            messagingSenderId: "565262782829",
+            appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
+            measurementId: "G-ZC6N6K969D"
         };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+        const db = getFirestore(app); // Firestore instance
         const auth = getAuth(app);
 
         // Check user authentication state
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Check if the user is anonymous
                 if (user.isAnonymous) {
-                    // Show login prompt for anonymous users
                     document.getElementById('loginPrompt').style.display = 'block';
                     document.getElementById('productForm').style.display = 'none';
                 } else {
-                    // User is properly authenticated
                     currentUser = user;
                     console.log("User ID:", user.uid);
                     document.getElementById('productForm').style.display = 'block';
                     document.getElementById('loginPrompt').style.display = 'none';
-                    
-                    // Prefill seller info if available
                     getUserData(user.uid);
                 }
             } else {
-                // User is not signed in at all
                 console.log("User is signed out");
                 document.getElementById('loginPrompt').style.display = 'block';
                 document.getElementById('productForm').style.display = 'none';
             }
         });
 
-        // Get user data to prefill form
+        // Get user data to prefill form (using Firestore)
         async function getUserData(userId) {
             try {
-                const userRef = ref(database, `users/${userId}`);
-                const userSnapshot = await get(userRef);
-                const userData = userSnapshot.val();
+                const userRef = doc(db, "users", userId);
+                const userSnap = await getDoc(userRef);
                 
-                if (userData) {
-                    // Prefill seller information if available
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
                     if (userData.name) document.getElementById('sellerName').value = userData.name;
                     if (userData.email) document.getElementById('email').value = userData.email;
                     if (userData.mobile) document.getElementById('mobile').value = userData.mobile;
@@ -479,9 +498,8 @@
         document.getElementById('previewBtn').addEventListener('click', function() {
             const imageUrl = document.getElementById('itemImage').value;
             const imagePreview = document.getElementById('imagePreview');
-            
+
             if (imageUrl) {
-                // Basic URL validation
                 try {
                     new URL(imageUrl);
                     imagePreview.src = imageUrl;
@@ -499,210 +517,174 @@
         // Form submission
         document.getElementById('productForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             if (!currentUser) {
                 showAlert("alertError", "You need to be logged in to add products.");
                 return;
             }
-            
+
             if (currentUser.isAnonymous) {
-                showAlert("alertError", "Anonymous users cannot add products. Please sign in with a registered account.");
+                showAlert("alertError", "Anonymous users cannot add products.");
                 return;
             }
-            
-            // Disable submit button
+
             const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
             submitBtn.disabled = true;
             submitBtn.textContent = "Submitting...";
-            
+            loadingSpinner.style.display = 'inline-block';
+
             // Get form values
-            const sellerName = document.getElementById('sellerName').value;
-            const mobile = document.getElementById('mobile').value;
-            const email = document.getElementById('email').value;
-            const itemType = document.getElementById('itemType').value;
-            const itemName = document.getElementById('itemName').value;
-            const price = parseFloat(document.getElementById('price').value);
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const description = document.getElementById('description').value;
-            const imageUrl = document.getElementById('itemImage').value;
-            
+            const formData = {
+                sellerName: document.getElementById('sellerName').value.trim(),
+                mobile: document.getElementById('mobile').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                itemType: document.getElementById('itemType').value,
+                itemName: document.getElementById('itemName').value.trim(),
+                price: parseFloat(document.getElementById('price').value),
+                quantity: parseInt(document.getElementById('quantity').value),
+                description: document.getElementById('description').value.trim(),
+                imageUrl: document.getElementById('itemImage').value.trim()
+            };
+
             // Validate image URL
             try {
-                new URL(imageUrl);
+                new URL(formData.imageUrl);
             } catch (e) {
                 showAlert("alertError", "Please enter a valid image URL");
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Submit Product";
+                loadingSpinner.style.display = 'none';
                 return;
             }
 
             try {
                 // Create product object
                 const productData = {
-                    sellerName,
-                    mobile,
-                    email,
-                    itemType,
-                    itemName,
-                    price,
-                    quantity,
-                    description,
-                    imageUrl,
+                    ...formData,
                     createdAt: new Date().toISOString(),
                     sellerId: currentUser.uid,
                     status: "active"
                 };
-                console.log("Product Data:", productData);
-                // Save product to Firebase
-                await saveProduct(productData);
-                console.log("Product saved successfully");
-                // Update seller's total products count
-                //await updateSellerStats(currentUser.uid);
-                console.log("Seller stats updated successfully");
-                // Update user profile if mobile number has changed
-                await updateUserProfile(currentUser.uid, sellerName, email, mobile);
-                console.log("User profile updated successfully");
-                // Show success message
+
+                // Save product to Firestore
+                const productId = await saveProduct(productData);
+                console.log("Product saved with ID:", productId);
+
+                // Update stats and profile
+                await updateSellerStats(currentUser.uid);
+                await updateUserProfile(currentUser.uid, formData.sellerName, formData.email, formData.mobile);
+
                 showAlert("alertSuccess", "Product added successfully!");
-                
-                // Reset form
                 this.reset();
                 document.getElementById('imagePreview').style.display = 'none';
-                
-                // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Submit Product";
-                
-                // Prefill seller info again
-                getUserData(currentUser.uid);
-                
+
             } catch (error) {
                 console.error("Error adding product:", error);
                 showAlert("alertError", "Error adding product: " + error.message);
-                
-                // Re-enable submit button
+            } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Submit Product";
+                loadingSpinner.style.display = 'none';
             }
         });
-        
-        // Update user profile information
+
+        // Update user profile information (using Firestore)
         async function updateUserProfile(userId, name, email, mobile) {
             try {
-                await update(ref(database, `users/${userId}`), {
+                const userRef = doc(db, "users", userId);
+                await setDoc(userRef, {
                     name: name,
                     email: email,
                     mobile: mobile
-                });
+                }, { merge: true }); // Merge with existing data
                 console.log("User profile updated");
             } catch (error) {
                 console.error("Error updating user profile:", error);
-                // Continue even if profile update fails
             }
         }
-        
-        // Save product to Firebase Realtime Database
+
+        // Save product to Firestore
         async function saveProduct(productData) {
             try {
-                //console.log(currentUser.isAnonymous)
-                // Get current user
-                const currentUser = getAuth().currentUser;
+                const currentUser = auth.currentUser;
                 if (!currentUser) {
                     throw new Error("No authenticated user found");
                 }
-        
-                // Create a reference to the products collection in the database
-                const productsRef = ref(database, 'products');
-                const newProductRef = push(productsRef);
-        
-                // Save product to the main products list
-                await set(newProductRef, productData);
-                console.log("Product saved to main products list");
-        
-                // Also add to the seller's products list
-                const sellerProductRef = ref(database, `users/${currentUser.uid}/products/${newProductRef.key}`);
-                await set(sellerProductRef, productData);
-                console.log("Product added to seller's product list");
-        
-                // Return the product's key (auto-generated)
-                return newProductRef.key;
+
+                // Create a new product document with auto-generated ID
+                const productsRef = collection(db, "products");
+                const newProductRef = doc(productsRef);
+                
+                // Save to main products collection
+                await setDoc(newProductRef, productData);
+                console.log("Product saved to main collection with ID:", newProductRef.id);
+
+                // Also save to user's products subcollection
+                const userProductRef = doc(db, "users", currentUser.uid, "products", newProductRef.id);
+                await setDoc(userProductRef, productData);
+                console.log("Product saved to user's collection with ID:", newProductRef.id);
+
+                return newProductRef.id;
             } catch (error) {
-                console.error("Detailed error saving product:", {
-                    error: error,
-                    message: error.message,
-                    stack: error.stack,
-                });
+                console.error("Error saving product:", error);
                 throw error;
             }
         }
-        
-        
-        // Update seller's stats after adding a product
+
+        // Update seller's stats (using Firestore)
         async function updateSellerStats(userId) {
             try {
-                const userRef = ref(database, `users/${userId}`);
-                const userSnapshot = await get(userRef);
-                const userData = userSnapshot.val() || {};
+                const userRef = doc(db, "users", userId);
+                const userSnap = await getDoc(userRef);
                 
-                // If stats doesn't exist, create it
-                if (!userData.stats) {
-                    userData.stats = {
-                        totalOrders: 0,
-                        totalSell: 0,
-                        totalProducts: 0,
-                        ordersComparison: "0% vs last month",
-                        sellComparison: "0% vs last month",
-                        productsComparison: "+0 vs last month"
-                    };
+                let stats = {
+                    totalOrders: 0,
+                    totalSell: 0,
+                    totalProducts: 0,
+                    ordersComparison: "0% vs last month",
+                    sellComparison: "0% vs last month",
+                    productsComparison: "+0 vs last month"
+                };
+
+                if (userSnap.exists() && userSnap.data().stats) {
+                    stats = userSnap.data().stats;
                 }
-                
-                // Increment total products count
-                const totalProducts = (userData.stats?.totalProducts || 0) + 1;
-                
-                // Update stats
-                await update(ref(database, `users/${userId}/stats`), {
-                    totalProducts: totalProducts,
-                    productsComparison: `+1 vs last month`
-                });
-                
-                console.log("Seller stats updated successfully");
+
+                // Increment products count
+                stats.totalProducts = (stats.totalProducts || 0) + 1;
+                stats.productsComparison = "+1 vs last month";
+
+                await setDoc(userRef, { stats }, { merge: true });
+                console.log("Seller stats updated");
             } catch (error) {
-                console.error("Error updating seller stats:", error);
+                console.error("Error updating stats:", error);
                 throw error;
             }
         }
-        
+
         // Show alert message
         function showAlert(alertId, message) {
             const alert = document.getElementById(alertId);
             alert.textContent = message;
             alert.style.display = 'block';
-            
-            // Hide after 5 seconds
             setTimeout(() => {
                 alert.style.display = 'none';
             }, 5000);
         }
-        
+
         // Dark mode toggle
         document.addEventListener('DOMContentLoaded', function() {
             const darkModeToggle = document.getElementById('darkModeToggle');
             const body = document.body;
             
-            // Check for saved user preference
             if (localStorage.getItem('darkMode') === 'enabled') {
                 body.classList.add('dark-mode');
             }
             
             darkModeToggle.addEventListener('click', () => {
                 body.classList.toggle('dark-mode');
-                
-                // Save user preference
-                if (body.classList.contains('dark-mode')) {
-                    localStorage.setItem('darkMode', 'enabled');
-                } else {
-                    localStorage.setItem('darkMode', 'disabled');
-                }
+                localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
             });
         });
     </script>
