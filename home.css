@@ -508,6 +508,88 @@ section {
     font-size: 0.9rem;
 }
 
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .ecommerce-container {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .store-nav {
+    background-color: #2d2d2d;
+    border-bottom-color: #444;
+}
+
+body.dark-mode .store-nav a {
+    color: #e0e0e0;
+}
+
+body.dark-mode .category-card,
+body.dark-mode .product-card,
+body.dark-mode .testimonial-card {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+}
+
+body.dark-mode .category-info p,
+body.dark-mode .product-title,
+body.dark-mode .product-price,
+body.dark-mode .testimonial-content {
+    color: #e0e0e0;
+}
+
+body.dark-mode .product-rating span {
+    color: #aaa;
+}
+
+body.dark-mode .add-to-cart,
+body.dark-mode .add-to-wishlist {
+    background-color: #3d3d3d;
+    color: #e0e0e0;
+}
+
+body.dark-mode .newsletter {
+    background-color: #2d2d2d;
+}
+
+body.dark-mode .newsletter p {
+    color: #aaa;
+}
+
+body.dark-mode .newsletter-form input {
+    background-color: #3d3d3d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.dark-mode-toggle i {
+    font-size: 1.2rem;
+}
+
 /* Responsive Styles */
 @media (max-width: 1024px) {
     .categories-grid, .products-grid {

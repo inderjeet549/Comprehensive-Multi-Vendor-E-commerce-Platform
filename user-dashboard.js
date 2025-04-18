@@ -1,13 +1,14 @@
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
+    authDomain: "e-commerce-602fb.firebaseapp.com",
+    projectId: "e-commerce-602fb",
+    storageBucket: "e-commerce-602fb.firebasestorage.app",
+    messagingSenderId: "565262782829",
+    appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
+    measurementId: "G-ZC6N6K969D"
 };
+
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -81,7 +82,7 @@ function loadUserStats() {
     // Update the UI with the stats
     totalOrdersEl.textContent = userStats.totalOrders;
     orderChangeEl.textContent = `${userStats.orderChange}% vs last month`;
-    totalSpendingEl.textContent = `¥${(userStats.totalSpending / 1000).toFixed(1)}K`;
+    totalSpendingEl.textContent = `₹${(userStats.totalSpending / 1000).toFixed(1)}K`;
     spendingChangeEl.textContent = `${userStats.spendingChange}% vs last month`;
     savedItemsEl.textContent = userStats.savedItems;
     savedChangeEl.textContent = `+${userStats.savedChange} vs last month`;

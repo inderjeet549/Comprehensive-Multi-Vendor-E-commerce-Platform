@@ -150,10 +150,10 @@ function showEmptyCart() {
     `;
     
     cartCountElement.textContent = '0';
-    subtotalElement.textContent = '¥0';
-    shippingElement.textContent = '¥0';
-    taxElement.textContent = '¥0';
-    totalElement.textContent = '¥0';
+    subtotalElement.textContent = '₹0';
+    shippingElement.textContent = '₹0';
+    taxElement.textContent = '₹0';
+    totalElement.textContent = '₹0';
     checkoutButton.disabled = true;
     
     // Reattach event listener to the new button
@@ -177,10 +177,10 @@ function calculateTotals() {
     const total = subtotal + shipping + tax;
     
     // Update UI
-    subtotalElement.textContent = `¥${subtotal.toFixed(2)}`;
-    shippingElement.textContent = `¥${shipping.toFixed(2)}`;
-    taxElement.textContent = `¥${tax.toFixed(2)}`;
-    totalElement.textContent = `¥${total.toFixed(2)}`;
+    subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
+    shippingElement.textContent = `₹${shipping.toFixed(2)}`;
+    taxElement.textContent = `₹${tax.toFixed(2)}`;
+    totalElement.textContent = `₹${total.toFixed(2)}`;
     
     // Enable checkout button if cart has items
     checkoutButton.disabled = cartItems.length === 0;
@@ -251,7 +251,7 @@ function proceedToCheckout() {
     if (cartItems.length === 0) return;
     
     // In a real app, you would redirect to checkout page
-    alert(`Proceeding to checkout with total: ¥${cartTotal.toFixed(2)}`);
+    alert(`Proceeding to checkout with total: ₹${cartTotal.toFixed(2)}`);
     
     // For demo, we'll just clear the cart
     const user = auth.currentUser;
