@@ -9,7 +9,6 @@ const firebaseConfig = {
     measurementId: "G-ZC6N6K969D"
 };
 
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
@@ -31,55 +30,67 @@ const deliveredCountEl = document.getElementById('delivered-count');
 const ordersListEl = document.getElementById('orders-list');
 const transactionsListEl = document.getElementById('transactions-list');
 const navItems = document.querySelectorAll('.nav-item');
-
-// Mock user ID (in a real app, you'd get this after authentication)
-const userId = "user123";
+const logoutBtn = document.getElementById('logout-btn');
+const userGreeting = document.getElementById('user-greeting');
 
 // Initialize the dashboard
 function initDashboard() {
-    // Load user data
-    loadUserStats();
-    loadRecentOrders();
-    loadPaymentHistory();
-    
-    // Set up navigation
-    setupNavigation();
-    
-    // Set up button event listeners
-    document.getElementById('track-order').addEventListener('click', () => {
-        alert('Track Order feature would open here');
-    });
-    
-    document.getElementById('view-wishlist').addEventListener('click', () => {
-        alert('Wishlist would open here');
-    });
-    
-    document.getElementById('contact-support').addEventListener('click', () => {
-        alert('Support chat would open here');
+    // Check authentication state
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            // User not logged in, redirect to login
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // User is logged in
+        displayUserInfo(user);
+        loadUserStats(user.uid);
+        loadRecentOrders(user.uid);
+        loadPaymentHistory(user.uid);
+        setupNavigation();
+        setupEventListeners();
     });
 }
 
-// Load user statistics
-function loadUserStats() {
-    // In a real app, you would fetch this from Firebase
-    // For demo purposes, we'll use mock data
+// Display user information
+function displayUserInfo(user) {
+    userGreeting.textContent = `Welcome, ${user.email || 'User'}!`;
+}
+
+// Load user statistics from Firebase
+function loadUserStats(userId) {
+    // Reference to user's stats in Firebase
+    const userStatsRef = database.ref(`users/${userId}/stats`);
     
-    // Mock data for user stats
-    const userStats = {
-        totalOrders: 120,
-        orderChange: 15,
-        totalSpending: 82000,
-        spendingChange: 7,
-        savedItems: 32,
-        savedChange: 5,
+    userStatsRef.once('value').then((snapshot) => {
+        const userStats = snapshot.val() || getDefaultStats();
+        
+        // Update the UI with the stats
+        updateStatsUI(userStats);
+    }).catch((error) => {
+        console.error('Error loading user stats:', error);
+        updateStatsUI(getDefaultStats());
+    });
+}
+
+function getDefaultStats() {
+    return {
+        totalOrders: 0,
+        orderChange: 0,
+        totalSpending: 0,
+        spendingChange: 0,
+        savedItems: 0,
+        savedChange: 0,
         orderStatus: {
-            processing: 30,
-            shipped: 48,
-            delivered: 42
+            processing: 0,
+            shipped: 0,
+            delivered: 0
         }
     };
-    
-    // Update the UI with the stats
+}
+
+function updateStatsUI(userStats) {
     totalOrdersEl.textContent = userStats.totalOrders;
     orderChangeEl.textContent = `${userStats.orderChange}% vs last month`;
     totalSpendingEl.textContent = `₹${(userStats.totalSpending / 1000).toFixed(1)}K`;
@@ -87,8 +98,7 @@ function loadUserStats() {
     savedItemsEl.textContent = userStats.savedItems;
     savedChangeEl.textContent = `+${userStats.savedChange} vs last month`;
     
-    // Calculate percentages for order status
-    const totalOrders = userStats.totalOrders;
+    const totalOrders = userStats.totalOrders || 1;
     const processingPercent = Math.round((userStats.orderStatus.processing / totalOrders) * 100);
     const shippedPercent = Math.round((userStats.orderStatus.shipped / totalOrders) * 100);
     const deliveredPercent = Math.round((userStats.orderStatus.delivered / totalOrders) * 100);
@@ -101,10 +111,28 @@ function loadUserStats() {
     deliveredCountEl.textContent = `${userStats.orderStatus.delivered}/${totalOrders} Orders`;
 }
 
-// Load recent orders
-function loadRecentOrders() {
-    // Mock data for recent orders
-    const recentOrders = [
+// Load recent orders from Firebase
+function loadRecentOrders(userId) {
+    const ordersRef = database.ref(`users/${userId}/orders`).limitToLast(4);
+    
+    ordersRef.once('value').then((snapshot) => {
+        const orders = [];
+        snapshot.forEach((childSnapshot) => {
+            orders.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+            });
+        });
+        
+        displayOrders(orders.length ? orders : getMockOrders());
+    }).catch((error) => {
+        console.error('Error loading orders:', error);
+        displayOrders(getMockOrders());
+    });
+}
+
+function getMockOrders() {
+    return [
         {
             date: "01/04/2024",
             product: "ZithroMax Antibiotic",
@@ -120,34 +148,17 @@ function loadRecentOrders() {
             orderId: "ZH2345",
             vendor: "Reliable Remedies",
             status: "Pending"
-        },
-        {
-            date: "24/05/2024",
-            product: "CiproCure 500mg",
-            location: "Mumbai, India",
-            orderId: "PX6789",
-            vendor: "HealthCorp Inc.",
-            status: "Delivered"
-        },
-        {
-            date: "11/04/2024",
-            product: "AmoxiHeal 250mg",
-            location: "Sydney, AUS",
-            orderId: "AM4567",
-            vendor: "MediCare Solutions",
-            status: "Shipped"
         }
     ];
-    
-    // Clear the orders list
+}
+
+function displayOrders(orders) {
     ordersListEl.innerHTML = '';
     
-    // Add each order to the list
-    recentOrders.forEach(order => {
+    orders.forEach(order => {
         const orderEl = document.createElement('div');
         orderEl.className = 'order-item';
         
-        // Determine status class
         let statusClass = '';
         if (order.status === 'Pending') statusClass = 'status-pending';
         else if (order.status === 'Shipped' || order.status === 'In Transit') statusClass = 'status-shipped';
@@ -170,30 +181,45 @@ function loadRecentOrders() {
     });
 }
 
-// Load payment history
-function loadPaymentHistory() {
-    // Mock data for payment history
-    const paymentHistory = [
-        { date: "05/04/2024", amount: 1200 },
-        { date: "12/04/2024", amount: 950 },
-        { date: "18/04/2024", amount: 2500 },
-        { date: "25/04/2024", amount: 800 },
-        { date: "02/05/2024", amount: 1500 }
-    ];
+// Load payment history from Firebase
+function loadPaymentHistory(userId) {
+    const paymentsRef = database.ref(`users/${userId}/payments`).limitToLast(5);
     
-    // Clear the transactions list
+    paymentsRef.once('value').then((snapshot) => {
+        const payments = [];
+        snapshot.forEach((childSnapshot) => {
+            payments.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+            });
+        });
+        
+        displayPayments(payments.length ? payments : getMockPayments());
+    }).catch((error) => {
+        console.error('Error loading payments:', error);
+        displayPayments(getMockPayments());
+    });
+}
+
+function getMockPayments() {
+    return [
+        { date: "05/04/2024", amount: 1200 },
+        { date: "12/04/2024", amount: 950 }
+    ];
+}
+
+function displayPayments(payments) {
     transactionsListEl.innerHTML = '';
     
-    // Add each transaction to the list
-    paymentHistory.forEach(transaction => {
-        const transactionEl = document.createElement('div');
-        transactionEl.className = 'transaction-item';
-        transactionEl.innerHTML = `
-            <div class="transaction-amount">-¥${transaction.amount}</div>
-            <div class="transaction-date">${transaction.date}</div>
+    payments.forEach(payment => {
+        const paymentEl = document.createElement('div');
+        paymentEl.className = 'transaction-item';
+        paymentEl.innerHTML = `
+            <div class="transaction-amount">-₹${payment.amount}</div>
+            <div class="transaction-date">${payment.date}</div>
         `;
         
-        transactionsListEl.appendChild(transactionEl);
+        transactionsListEl.appendChild(paymentEl);
     });
 }
 
@@ -203,17 +229,67 @@ function setupNavigation() {
         item.addEventListener('click', (e) => {
             e.preventDefault();
             
-            // Remove active class from all items
             navItems.forEach(navItem => {
                 navItem.classList.remove('active');
             });
             
-            // Add active class to clicked item
             item.classList.add('active');
             
-            // In a real app, you would load the appropriate section here
-            alert(`Loading ${item.dataset.section} section...`);
+            // In a real app, load the appropriate section here
+            console.log(`Loading ${item.dataset.section} section...`);
         });
+    });
+}
+
+// Set up event listeners
+function setupEventListeners() {
+    document.getElementById('track-order').addEventListener('click', () => {
+        window.location.href = 'order-tracking/index.html';
+    });
+    
+    document.getElementById('view-wishlist').addEventListener('click', () => {
+        window.location.href = 'wishlist.html';
+    });
+    
+    document.getElementById('contact-support').addEventListener('click', () => {
+        window.location.href = 'cart2/cart.html';
+    });
+
+    // Logout functionality
+    logoutBtn.addEventListener('click', handleLogout);
+}
+
+auth.onAuthStateChanged((user) => {
+    if (!user) {
+        // User is not logged in, redirect to login page
+        window.location.href = 'login.html';
+    } else {
+        // User is logged in, initialize the dashboard
+        initDashboard(user);
+    }
+});
+
+// Modify the initDashboard function to accept user parameter
+function initDashboard(user) {
+    // Display user info
+    document.getElementById('user-greeting').textContent = `Welcome, ${user.email || 'User'}!`;
+    
+    // Load dashboard data
+    loadUserStats(user.uid);
+    loadRecentOrders(user.uid);
+    loadPaymentHistory(user.uid);
+    setupNavigation();
+    setupEventListeners();
+}
+
+// Update the logout function
+function handleLogout() {
+    auth.signOut().then(() => {
+        alert('You have been logged out successfully');
+        window.location.href = 'login.html';
+    }).catch((error) => {
+        console.error('Logout error:', error);
+        alert('Error logging out. Please try again.');
     });
 }
 
