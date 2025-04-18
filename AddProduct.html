@@ -114,6 +114,8 @@
         input[type="email"],
         input[type="tel"],
         input[type="number"],
+        input[type="password"],
+        input[type="url"],
         select, 
         textarea {
             width: 100%;
@@ -129,6 +131,8 @@
         body.dark-mode input[type="email"],
         body.dark-mode input[type="tel"],
         body.dark-mode input[type="number"],
+        body.dark-mode input[type="password"],
+        body.dark-mode input[type="url"],
         body.dark-mode select, 
         body.dark-mode textarea {
             background-color: #3d3d3d;
@@ -185,48 +189,6 @@
             margin-top: var(--spacing-md);
         }
         
-        /* File Upload - Matching Theme */
-        .file-upload {
-            width: 100%;
-            position: relative;
-        }
-
-        .file-upload input[type="file"] {
-            width: 100%;
-            padding: var(--spacing-sm);
-            box-sizing: border-box;
-            background-color: var(--light-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-        }
-        
-        body.dark-mode .file-upload input[type="file"] {
-            background-color: #3d3d3d;
-            border-color: #555;
-            color: var(--light-color);
-        }
-
-        /* Progress Bar - Matching Dashboard */
-        .progress-container {
-            width: 100%;
-            background-color: #e9ecef;
-            border-radius: 4px;
-            margin-top: var(--spacing-sm);
-            display: none;
-        }
-
-        body.dark-mode .progress-container {
-            background-color: #444;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background-color: var(--primary-color);
-            border-radius: 4px;
-            width: 0%;
-            transition: width 0.3s;
-        }
-
         /* Alerts - Matching Dashboard Colors */
         .alert {
             padding: var(--spacing-sm);
@@ -255,13 +217,30 @@
             background-color: rgba(220, 53, 69, 0.1);
         }
 
+        .alert-warning {
+            background-color: rgba(255, 193, 7, 0.2);
+            border: 1px solid var(--warning-color);
+            color: #856404;
+            display: block;
+        }
+
+        body.dark-mode .alert-warning {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #e0d3a3;
+        }
+
         /* Image Preview */
         .thumbnail-preview {
-            max-width: 100px;
-            max-height: 100px;
+            max-width: 200px;
+            max-height: 200px;
             margin-top: var(--spacing-sm);
             border-radius: var(--border-radius);
             display: none;
+            border: 1px solid var(--border-color);
+        }
+
+        body.dark-mode .thumbnail-preview {
+            border-color: #555;
         }
 
         /* Section Titles - Matching Dashboard Cards */
@@ -292,19 +271,14 @@
             color: inherit;
         }
 
-        /* Logo - Matching Dashboard */
-        .logo {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 150px;
+        /* URL Preview Container */
+        .url-preview-container {
+            margin-top: var(--spacing-sm);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
         }
 
-        .lower-nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .container {
@@ -330,15 +304,15 @@
             <div class="d-flex justify-content-between">
                 <div class="lower-nav">
                     <div class="d-flex align-items-center">
-                    <img src="logo.jpg" alt="logo" style="height: 50px; width: auto; border-radius: 5px; box-shadow: var(--shadow-sm);">
-                </div>
-                <div class="">
-                    <h1 class="text-primary">Add New Product</h1>
-                </div>
-                <div class="d-flex">
-                    <button class="dark-mode-toggle me-4" id="darkModeToggle">🌓</button>
-                    <button class="btn btn-secondary" onclick="window.location.href='/seller-dashboard.html'">Back to Dashboard</button>
-                </div>
+                        <img src="logo.jpg" alt="logo" style="height: 50px; width: auto; border-radius: 5px; box-shadow: var(--shadow-sm);">
+                    </div>
+                    <div class="">
+                        <h1 class="text-primary">Add New Product</h1>
+                    </div>
+                    <div class="d-flex">
+                        <button class="dark-mode-toggle me-4" id="darkModeToggle">🌓</button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/seller-dashboard.html'">Back to Dashboard</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -352,8 +326,17 @@
         <div id="alertError" class="alert alert-danger">
             Error adding product. Please try again.
         </div>
+        
+        <div id="loginPrompt" style="display: none;">
+            <div class="alert alert-warning">
+                You need to be logged in to add products.
+            </div>
+            <div class="login-redirect">
+                <button class="btn btn-primary" onclick="window.location.href='/login.html'">Sign In / Register</button>
+            </div>
+        </div>
 
-        <form id="productForm">
+        <form id="productForm" style="display: none;">
             <h3 class="section-title">Seller Information</h3>
             <div class="form-group">
                 <label for="sellerName" class="required">Name of Seller:</label>
@@ -404,13 +387,11 @@
             </div>
             
             <div class="form-group">
-                <label for="itemImage" class="required">Item Picture:</label>
-                <div class="file-upload">
-                    <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
-                    <img id="imagePreview" class="thumbnail-preview" alt="Preview">
-                </div>
-                <div id="uploadProgress" class="progress-container">
-                    <div id="progressBar" class="progress-bar"></div>
+                <label for="itemImage" class="required">Item Image URL:</label>
+                <input type="url" id="itemImage" name="itemImage" placeholder="https://example.com/image.jpg" required>
+                <div class="url-preview-container">
+                    <button type="button" id="previewBtn" class="btn btn-secondary" style="width: 120px;">Preview Image</button>
+                    <img id="imagePreview" class="thumbnail-preview" alt="Image Preview">
                 </div>
             </div>
             
@@ -420,79 +401,98 @@
         </form>
     </div>
 
-    <!-- Logo in bottom left corner -->
-    <div class="logo">
-        <svg width="150" viewBox="0 0 369.67 68.8">
-            <path fill="#111111" d="M544,0C537,24 529,49 520,74C511,99 502,125 493,150l-270,0C214,125 206,99 197,74C188,49 179,24 172,0l-162,0C36,75 61,144 84,207C107,270 130,330 153,386C175,442 197,495 219,546C240,596 263,645 286,693l149,0C458,645 480,596 502,546C524,495 546,442 569,386C591,330 614,270 637,207C660,144 685,75 711,0M357,536C354,526 349,512 342,495C335,478 328,458 319,435C310,412 301,387 291,360C280,333 270,304 259,274l197,0C445,304 435,333 425,360C415,387 406,412 397,435C388,458 380,478 373,495C366,512 361,526 357,536z"/>
-        </svg>
-    </div>
-
     <!-- Firebase SDK -->
     <script type="module">
-        // [Previous Firebase JavaScript code remains exactly the same]
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-        import { getDatabase, ref, set, push, update, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
-        import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-        import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getDatabase, ref, set, push, get, update } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+        import { 
+          getAuth, 
+          onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+        // Declare currentUser globally
+        let currentUser = null;
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
-            authDomain: "e-commerce-602fb.firebaseapp.com",
-            databaseURL: "https://e-commerce-602fb-default-rtdb.firebaseio.com",
-            projectId: "e-commerce-602fb",
-            storageBucket: "e-commerce-602fb.appspot.com",
-            messagingSenderId: "565262782829",
-            appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
-            measurementId: "G-ZC6N6K969D"
+          apiKey: "AIzaSyBacyV04HeeJPRvUQOAOYqIEN7fAeUL5wk",
+          authDomain: "e-commerce-602fb.firebaseapp.com",
+          databaseURL: "https://e-commerce-602fb-default-rtdb.firebaseio.com",
+          projectId: "e-commerce-602fb",
+          storageBucket: "e-commerce-602fb.appspot.com",
+          messagingSenderId: "565262782829",
+          appId: "1:565262782829:web:e7cc1178c4a6df6b6fca64",
+          measurementId: "G-ZC6N6K969D"
         };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const database = getDatabase(app);
         const auth = getAuth(app);
-        const storage = getStorage(app);
-
-        let currentUser = null;
-
-        // Sign in anonymously
-        signInAnonymously(auth)
-            .then(() => {
-                console.log("Signed in anonymously");
-            })
-            .catch((error) => {
-                console.error("Anonymous sign-in error:", error);
-                showAlert("alertError", "Authentication failed. Please refresh the page.");
-            });
 
         // Check user authentication state
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in
-                currentUser = user;
-                console.log("User ID:", user.uid);
+                // Check if the user is anonymous
+                if (user.isAnonymous) {
+                    // Show login prompt for anonymous users
+                    document.getElementById('loginPrompt').style.display = 'block';
+                    document.getElementById('productForm').style.display = 'none';
+                } else {
+                    // User is properly authenticated
+                    currentUser = user;
+                    console.log("User ID:", user.uid);
+                    document.getElementById('productForm').style.display = 'block';
+                    document.getElementById('loginPrompt').style.display = 'none';
+                    
+                    // Prefill seller info if available
+                    getUserData(user.uid);
+                }
             } else {
-                // User is signed out
+                // User is not signed in at all
                 console.log("User is signed out");
+                document.getElementById('loginPrompt').style.display = 'block';
+                document.getElementById('productForm').style.display = 'none';
             }
         });
 
-        // Image preview
-        const imageInput = document.getElementById('itemImage');
-        const imagePreview = document.getElementById('imagePreview');
-
-        imageInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
+        // Get user data to prefill form
+        async function getUserData(userId) {
+            try {
+                const userRef = ref(database, `users/${userId}`);
+                const userSnapshot = await get(userRef);
+                const userData = userSnapshot.val();
+                
+                if (userData) {
+                    // Prefill seller information if available
+                    if (userData.name) document.getElementById('sellerName').value = userData.name;
+                    if (userData.email) document.getElementById('email').value = userData.email;
+                    if (userData.mobile) document.getElementById('mobile').value = userData.mobile;
                 }
-                reader.readAsDataURL(file);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        }
+
+        // Image preview functionality
+        document.getElementById('previewBtn').addEventListener('click', function() {
+            const imageUrl = document.getElementById('itemImage').value;
+            const imagePreview = document.getElementById('imagePreview');
+            
+            if (imageUrl) {
+                // Basic URL validation
+                try {
+                    new URL(imageUrl);
+                    imagePreview.src = imageUrl;
+                    imagePreview.style.display = 'block';
+                } catch (e) {
+                    showAlert("alertError", "Please enter a valid URL (e.g., https://example.com/image.jpg)");
+                    imagePreview.style.display = 'none';
+                }
+            } else {
+                showAlert("alertError", "Please enter an image URL first");
+                imagePreview.style.display = 'none';
             }
         });
 
@@ -502,6 +502,11 @@
             
             if (!currentUser) {
                 showAlert("alertError", "You need to be logged in to add products.");
+                return;
+            }
+            
+            if (currentUser.isAnonymous) {
+                showAlert("alertError", "Anonymous users cannot add products. Please sign in with a registered account.");
                 return;
             }
             
@@ -519,15 +524,19 @@
             const price = parseFloat(document.getElementById('price').value);
             const quantity = parseInt(document.getElementById('quantity').value);
             const description = document.getElementById('description').value;
-            const itemImage = document.getElementById('itemImage').files[0];
+            const imageUrl = document.getElementById('itemImage').value;
             
+            // Validate image URL
             try {
-                // Upload image first
-                let imageUrl = null;
-                if (itemImage) {
-                    imageUrl = await uploadImage(itemImage);
-                }
-                
+                new URL(imageUrl);
+            } catch (e) {
+                showAlert("alertError", "Please enter a valid image URL");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Product";
+                return;
+            }
+
+            try {
                 // Create product object
                 const productData = {
                     sellerName,
@@ -543,27 +552,29 @@
                     sellerId: currentUser.uid,
                     status: "active"
                 };
-                
+                console.log("Product Data:", productData);
                 // Save product to Firebase
                 await saveProduct(productData);
-                
+                console.log("Product saved successfully");
                 // Update seller's total products count
-                await updateSellerStats(currentUser.uid);
-                
+                //await updateSellerStats(currentUser.uid);
+                console.log("Seller stats updated successfully");
+                // Update user profile if mobile number has changed
+                await updateUserProfile(currentUser.uid, sellerName, email, mobile);
+                console.log("User profile updated successfully");
                 // Show success message
                 showAlert("alertSuccess", "Product added successfully!");
                 
                 // Reset form
                 this.reset();
-                imagePreview.style.display = 'none';
+                document.getElementById('imagePreview').style.display = 'none';
                 
                 // Re-enable submit button
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Submit Product";
                 
-                // Clear progress bar
-                document.getElementById('uploadProgress').style.display = 'none';
-                document.getElementById('progressBar').style.width = '0%';
+                // Prefill seller info again
+                getUserData(currentUser.uid);
                 
             } catch (error) {
                 console.error("Error adding product:", error);
@@ -575,59 +586,56 @@
             }
         });
         
-        // Upload image to Firebase Storage
-        async function uploadImage(file) {
-            return new Promise((resolve, reject) => {
-                const fileName = `products/${currentUser.uid}/${Date.now()}-${file.name}`;
-                const imgRef = storageRef(storage, fileName);
-                const uploadTask = uploadBytesResumable(imgRef, file);
-                
-                // Show progress bar
-                const progressContainer = document.getElementById('uploadProgress');
-                progressContainer.style.display = 'block';
-                
-                uploadTask.on('state_changed', 
-                    (snapshot) => {
-                        // Track upload progress
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        document.getElementById('progressBar').style.width = progress + '%';
-                    },
-                    (error) => {
-                        // Handle errors
-                        reject(error);
-                    },
-                    async () => {
-                        // Upload completed successfully
-                        try {
-                            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                            resolve(downloadURL);
-                        } catch (error) {
-                            reject(error);
-                        }
-                    }
-                );
-            });
+        // Update user profile information
+        async function updateUserProfile(userId, name, email, mobile) {
+            try {
+                await update(ref(database, `users/${userId}`), {
+                    name: name,
+                    email: email,
+                    mobile: mobile
+                });
+                console.log("User profile updated");
+            } catch (error) {
+                console.error("Error updating user profile:", error);
+                // Continue even if profile update fails
+            }
         }
         
         // Save product to Firebase Realtime Database
         async function saveProduct(productData) {
             try {
-                // Create new product with auto-generated key
+                //console.log(currentUser.isAnonymous)
+                // Get current user
+                const currentUser = getAuth().currentUser;
+                if (!currentUser) {
+                    throw new Error("No authenticated user found");
+                }
+        
+                // Create a reference to the products collection in the database
                 const productsRef = ref(database, 'products');
                 const newProductRef = push(productsRef);
+        
+                // Save product to the main products list
                 await set(newProductRef, productData);
-                
-                // Also add to seller's products list
+                console.log("Product saved to main products list");
+        
+                // Also add to the seller's products list
                 const sellerProductRef = ref(database, `users/${currentUser.uid}/products/${newProductRef.key}`);
-                await set(sellerProductRef, true);
-                
-                console.log("Product saved successfully with ID:", newProductRef.key);
+                await set(sellerProductRef, productData);
+                console.log("Product added to seller's product list");
+        
+                // Return the product's key (auto-generated)
                 return newProductRef.key;
             } catch (error) {
-                console.error("Error saving product:", error);
+                console.error("Detailed error saving product:", {
+                    error: error,
+                    message: error.message,
+                    stack: error.stack,
+                });
                 throw error;
             }
         }
+        
         
         // Update seller's stats after adding a product
         async function updateSellerStats(userId) {
@@ -649,7 +657,7 @@
                 }
                 
                 // Increment total products count
-                const totalProducts = (userData.stats.totalProducts || 0) + 1;
+                const totalProducts = (userData.stats?.totalProducts || 0) + 1;
                 
                 // Update stats
                 await update(ref(database, `users/${userId}/stats`), {

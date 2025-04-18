@@ -237,7 +237,8 @@ function setupEventListeners() {
     // Cart link
     document.getElementById('cart').addEventListener('click', function(e) {
         e.preventDefault();
-        alert('Cart page would open here');
+        window.location.href = "cart-checkout/index.html"; // Redirect to cart page
+        // alert('Cart page would open here');
     });
 }
 
