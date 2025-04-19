@@ -1,8 +1,6 @@
 Here’s a complete and enhanced `README.md` for **ShopAdda**, combining your new format with relevant content from your original README:
 
 ---
-
-```markdown
 # 🛒 ShopAdda - E-commerce Website
 
 ## 🧾 Introduction
@@ -23,18 +21,31 @@ Frontend | Backend (Firebase) | Fullstack
 ---
 
 ## 📁 Directory Structure
-```
-shopadda/
-├── frontend/
-│   ├── index.html
-│   ├── styles/
-│   ├── scripts/
-│   └── assets/
-├── firebase/
-│   ├── firebase-config.js
-│   └── auth/
-│   └── database/
-```
+
+
+ShopAdda
+  |-cart2
+  |   |-cart.html
+  |   |-cart.css
+  |   |-card.js
+  |-order-tracking
+  |   |-index.html
+  |   |-styles.css
+  |   |-script.js
+  |-AddProduct.html
+  |-SellerHistory.html
+  |-firebase_config.js
+  |-home.css
+  |-home.html
+  |-home.js
+  |-login.html
+  |-logo.jpg
+  |-seller-dashboard.html
+  |-signup.html
+  |-style.css
+  |-user-dashboard.css
+  |-user-dashboard.html
+  |-user-dashboard.js
 
 ---
 
