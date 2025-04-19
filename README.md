@@ -14,7 +14,7 @@ Frontend | Backend (Firebase) | Fullstack
 ---
 
 ## 🌐 Deployed App
-- **Frontend:** [https://shopadda-frontend.vercel.app](shop-adda.vercel.app/home.html)  
+- **Frontend:**[shop-adda.vercel.app/home.html](https://shop-adda.vercel.app/home.html) 
 - **Backend (Firebase):** Hosted on Firebase  
 - **Database:** Firestore
 
