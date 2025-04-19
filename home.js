@@ -89,7 +89,7 @@ function displayCategories(categories) {
     const categoryImages = {
         "electronics": "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg",
         "jewelery": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
-        "men's clothing": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+        "men's clothing": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
         "women's clothing": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg"
     };
 
@@ -152,16 +152,16 @@ function displayProducts(products) {
             </div>
             <div class="product-info">
                 <div class="product-title">${product.title || product.itemName || 'Unnamed Product'}</div>
-                <div class="product-price">$${(product.price || 0).toFixed(2)}</div>
+                <div class="product-price">₹${(product.price || 0).toFixed(2)}</div>
                 <div class="product-rating">
                     ${generateStarRating(product.rating?.rate || 4)}
                     <span>(${product.rating?.count || 100})</span>
                 </div>
                 <div class="product-actions">
-                    <button class="add-to-cart" data-id="${product.id}">
+                    <button class="add-to-cart" onClick=(addToCart()) data-id="${product.id}">
                         <i class="fas fa-shopping-cart"></i> Add to Cart
                     </button>
-                    <button class="add-to-wishlist" data-id="${product.id}">
+                    <button class="add-to-wishlist" onClick=(addToWishlist()) data-id="${product.id}">
                         <i class="fas fa-heart"></i>
                     </button>
                 </div>
