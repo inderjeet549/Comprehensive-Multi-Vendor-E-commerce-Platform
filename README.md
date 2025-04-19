@@ -52,6 +52,9 @@ ShopAdda
 ## 🎥 Video Walkthrough of the Project
 https://drive.google.com/file/d/10yzMddLKexQd34XNfLfnLxg1GdV87U7i/view?usp=sharing
 
+## 🎥 Video Walkthrough of the code
+https://drive.google.com/file/d/14P8-cm3-0NtOIsG62rSbeMoWusbZOWKH/view?usp=sharing
+
 ---
 
 ---
