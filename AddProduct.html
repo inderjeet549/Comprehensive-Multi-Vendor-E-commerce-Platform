@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Product</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add New Product</title>
+        <style>
         /* CSS Reset */
         * {
             margin: 0;
@@ -321,114 +321,131 @@
             }
         }
     </style>
-</head>
-<body>
-    <div class="dashboard-header">
+    </head>
+    <body>
+        <div class="dashboard-header">
+            <div class="container">
+                <div class="d-flex justify-content-between">
+                    <div class="lower-nav">
+                        <div class="d-flex align-items-center">
+                            <img src="logo.jpg" alt="logo"
+                                style="height: 50px; width: auto; border-radius: 5px; box-shadow: var(--shadow-sm);">
+                        </div>
+                        <div class="d-flex">
+                            <h1 class="text-primary">Add New Product</h1>
+                        </div>
+                        <div class="d-flex">
+                            <!-- <button class="dark-mode-toggle me-4" id="darkModeToggle">🌓</button> -->
+                            <button class="btn btn-secondary"
+                                onclick="window.location.href='/seller-dashboard.html'">Back
+                                to Dashboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
-            <div class="d-flex justify-content-between">
-                <div class="lower-nav">
-                    <div class="d-flex align-items-center">
-                        <img src="logo.jpg" alt="logo" style="height: 50px; width: auto; border-radius: 5px; box-shadow: var(--shadow-sm);">
-                    </div>
-                    <div class="d-flex">
-                        <h1 class="text-primary">Add New Product</h1>
-                    </div>
-                    <div class="d-flex">
-                        <!-- <button class="dark-mode-toggle me-4" id="darkModeToggle">🌓</button> -->
-                        <button class="btn btn-secondary" onclick="window.location.href='/seller-dashboard.html'">Back to Dashboard</button>
-                    </div>
+            <div id="alertSuccess" class="alert alert-success">
+                Product added successfully!
+            </div>
+
+            <div id="alertError" class="alert alert-danger">
+                Error adding product. Please try again.
+            </div>
+
+            <div id="loginPrompt" style="display: none;">
+                <div class="alert alert-warning">
+                    You need to be logged in to add products.
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div id="alertSuccess" class="alert alert-success">
-            Product added successfully!
-        </div>
-
-        <div id="alertError" class="alert alert-danger">
-            Error adding product. Please try again.
-        </div>
-
-        <div id="loginPrompt" style="display: none;">
-            <div class="alert alert-warning">
-                You need to be logged in to add products.
-            </div>
-            <div class="login-redirect">
-                <button class="btn btn-primary" onclick="window.location.href='/login.html'">Sign In / Register</button>
-            </div>
-        </div>
-
-        <form id="productForm" style="display: none;">
-            <h3 class="section-title">Seller Information</h3>
-            <div class="form-group">
-                <label for="sellerName" class="required">Name of Seller:</label>
-                <input type="text" id="sellerName" name="sellerName" required>
-            </div>
-
-            <div class="form-group">
-                <label for="mobile" class="required">Mobile Number:</label>
-                <input type="tel" id="mobile" name="mobile" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email" class="required">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <h3 class="section-title">Product Information</h3>
-            <div class="form-group">
-                <label for="itemType" class="required">Type of Item:</label>
-                <select id="itemType" name="itemType" required>
-                    <option value="">Select item type</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="clothing">Clothing</option>
-                    <option value="furniture">Furniture</option>
-                    <option value="groceries">Groceries</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="itemName" class="required">Item Name:</label>
-                <input type="text" id="itemName" name="itemName" required>
-            </div>
-
-            <div class="form-group">
-                <label for="price" class="required">Price (₹):</label>
-                <input type="number" id="price" name="price" min="0" step="0.01" required>
-            </div>
-
-            <div class="form-group">
-                <label for="quantity" class="required">Number of Items:</label>
-                <input type="number" id="quantity" name="quantity" min="1" required>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="itemImage" class="required">Item Image URL:</label>
-                <input type="url" id="itemImage" name="itemImage" placeholder="https://example.com/image.jpg" required>
-                <div class="url-preview-container">
-                    <button type="button" id="previewBtn" class="btn btn-secondary" style="width: 120px;">Preview Image</button>
-                    <img id="imagePreview" class="thumbnail-preview" alt="Image Preview">
+                <div class="login-redirect">
+                    <button class="btn btn-primary"
+                        onclick="window.location.href='/login.html'">Sign In /
+                        Register</button>
                 </div>
             </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
-                    Submit Product
-                    <div class="loading-spinner" id="loadingSpinner"></div>
-                </button>
-            </div>
-        </form>
-    </div>
+            <form id="productForm" style="display: none;">
+                <h3 class="section-title">Seller Information</h3>
+                <div class="form-group">
+                    <label for="sellerName" class="required">Name of
+                        Seller:</label>
+                    <input type="text" id="sellerName" name="sellerName"
+                        required>
+                </div>
 
-    <script type="module">
+                <div class="form-group">
+                    <label for="mobile" class="required">Mobile Number:</label>
+                    <input type="tel" id="mobile" name="mobile" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="required">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <h3 class="section-title">Product Information</h3>
+                <div class="form-group">
+                    <label for="itemType" class="required">Type of Item:</label>
+                    <select id="itemType" name="itemType" required>
+                        <option value>Select item type</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="groceries">Groceries</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemName" class="required">Item Name:</label>
+                    <input type="text" id="itemName" name="itemName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price" class="required">Price (₹):</label>
+                    <input type="number" id="price" name="price" min="0"
+                        step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity" class="required">Number of
+                        Items:</label>
+                    <input type="number" id="quantity" name="quantity" min="1"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description"
+                        rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemImage" class="required">Item Image
+                        URL:</label>
+                    <input type="url" id="itemImage" name="itemImage"
+                        placeholder="https://example.com/image.jpg" required>
+                    <div class="url-preview-container">
+                        <button type="button" id="previewBtn"
+                            class="btn btn-secondary"
+                            style="width: 120px;">Preview Image</button>
+                        <img id="imagePreview" class="thumbnail-preview"
+                            alt="Image Preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary submit-btn"
+                        id="submitBtn">
+                        Submit Product
+                        <div class="loading-spinner" id="loadingSpinner"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { 
@@ -694,5 +711,5 @@
             });
         });
     </script>
-</body>
+    </body>
 </html>

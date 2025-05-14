@@ -1,6 +1,3 @@
-Here’s a complete and enhanced `README.md` for **ShopAdda**, combining your new format with relevant content from your original README:
-
----
 # 🛒 ShopAdda - E-commerce Website
 
 ## 🧾 Introduction
